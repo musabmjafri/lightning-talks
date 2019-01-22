@@ -5,18 +5,22 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './material/material.module';
 import { AppComponent } from './app.component';
+import { CoreModule } from './core/core.module';
+import { ShellModule } from './shell/shell.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+    BrowserAnimationsModule,
     MaterialModule,
-    BrowserAnimationsModule
+    CoreModule,
+    ShellModule,
+    AppRoutingModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

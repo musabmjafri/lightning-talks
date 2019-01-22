@@ -4,10 +4,10 @@ import { MatButtonModule } from '@angular/material';
 @NgModule({
   declarations: [],
   imports: [
-    MatButtonModule
+    MatButtonModule,
   ],
   exports: [
-    MatButtonModule
-  ]
+    MatButtonModule,
+  ],
 })
 export class MaterialModule { }
