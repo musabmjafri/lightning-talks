@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
-import { MaterialModule } from './material/material.module';
+import { PrimeNgModule } from './prime-ng/prime-ng.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { ShellModule } from './shell/shell.module';
@@ -15,7 +15,7 @@ import { ShellModule } from './shell/shell.module';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    MaterialModule,
+    PrimeNgModule,
     CoreModule,
     ShellModule,
     AppRoutingModule,

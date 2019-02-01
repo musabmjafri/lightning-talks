@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { GeneralShellComponent } from './general-shell.component';
+import { HeaderComponent } from '../header/header.component';
+import { MainContentComponent } from '../main-content/main-content.component';
 
 describe('GeneralShellComponent', () => {
   let component: GeneralShellComponent;
@@ -8,7 +11,8 @@ describe('GeneralShellComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GeneralShellComponent ],
+      declarations: [ GeneralShellComponent, HeaderComponent, MainContentComponent ],
+      imports: [ RouterTestingModule ],
     })
     .compileComponents();
   }));
