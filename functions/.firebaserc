@@ -1,6 +1,6 @@
 {
   "projects": {
-    "development": "lightning-app-dev"
+    "development": "lightning-app-dev",
     "production": "lightning-app-prod"
   }
 }
