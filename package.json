@@ -21,6 +21,8 @@
     "@angular/platform-browser": "~7.1.0",
     "@angular/platform-browser-dynamic": "~7.1.0",
     "@angular/router": "~7.1.0",
+    "@google-cloud/firestore": "^1.0.1",
+    "@slack/client": "^4.8.0",
     "core-js": "^2.5.4",
     "primeicons": "~1.0.0",
     "primeng": "~7.0.5",
