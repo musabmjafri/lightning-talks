@@ -22,9 +22,9 @@ export const getAllActiveTalks = async (): Promise<Talk[] | string> => {
 
         snapshot.forEach((doc) => {
             const talk: Talk = new Talk(doc.get('id'), doc.get('talkTitle'), doc.get('speakerNameList'), doc.get('speakerEmailList'),
-                doc.get('talkExcerpt'), doc.get('dateSubmission'), doc.get('dateSchedule'), doc.get('dateModified'), doc.get('urlPresentation'), doc.get('urlVideo'),
-                doc.get('dislikeCount'), doc.get('dislikeList'), doc.get('likeCount'), doc.get('likeList'),
-                doc.get('isSpecialTalk'), doc.get('isActive'));
+                doc.get('talkExcerpt'), doc.get('dateSubmission'), doc.get('dateTentative'), doc.get('dateSchedule'), doc.get('dateModified'),
+                doc.get('urlPresentation'), doc.get('urlVideo'), doc.get('dislikeCount'), doc.get('dislikeList'), doc.get('likeCount'),
+                doc.get('likeList'), doc.get('isSpecialTalk'), doc.get('isActive'));
             talks.push(talk);
         });
 

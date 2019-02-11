@@ -6,6 +6,7 @@ export class Talk {
     speakerEmailList: Array<string>;
     talkExcerpt: string;
     dateSubmission: Date;
+    dateTentative: Date;
     dateSchedule: Date;
     dateModified: Date;
     urlPresentation: string;
@@ -18,9 +19,9 @@ export class Talk {
     isActive: boolean;
 
     constructor(id: string, talkTitle: string, speakerNameList: Array<string>, speakerEmailList: Array<string>,
-        talkExcerpt: string, dateSubmission: Date, dateSchedule: Date, dateModified: Date, urlPresentation: string, urlVideo: string,
-        dislikeCount: number, dislikeList: Array<string>, likeCount: number, likeList: Array<string>,
-        isSpecialTalk: boolean, isActive: boolean) {
+        talkExcerpt: string, dateSubmission: Date, dateTentative: Date, dateSchedule: Date, dateModified: Date,
+        urlPresentation: string, urlVideo: string, dislikeCount: number, dislikeList: Array<string>, likeCount: number,
+        likeList: Array<string>, isSpecialTalk: boolean, isActive: boolean) {
 
         this.id = id;
         this.talkTitle = talkTitle;
@@ -28,6 +29,7 @@ export class Talk {
         this.speakerEmailList = speakerEmailList;
         this.talkExcerpt = talkExcerpt;
         this.dateSubmission = dateSubmission;
+        this.dateTentative = dateTentative;
         this.dateSchedule = dateSchedule;
         this.dateModified = dateModified;
         this.urlPresentation = urlPresentation;
