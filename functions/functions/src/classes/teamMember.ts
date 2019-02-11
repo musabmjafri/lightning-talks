@@ -1,4 +1,5 @@
 export class TeamMember {
+    
     id: string;
     name: string;
     emailPrimary: string;
@@ -6,6 +7,7 @@ export class TeamMember {
     isActive: boolean;
 
     constructor(id: string, name: string, emailPrimary: string, emailSecondary: string, isActive: boolean) {
+        
         this.id = id;
         this.name = name;
         this.emailPrimary = emailPrimary;
