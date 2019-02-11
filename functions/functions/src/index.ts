@@ -4,10 +4,11 @@ import * as submissionConfirmations from './services/function-submissionConfimat
 import * as speakerReminders from './services/function-speakerreminders'
 import * as talkAnnoucements from './services/function-talkannoucements'
 import * as slockbot from './services/function-slackbot'
+import * as constants from './constants';
 
 admin.initializeApp({ credential: admin.credential.applicationDefault() });
 
-export const postSubmissionConfirmation = functions.firestore.document('talks/{talk}').onCreate(submissionConfirmations.send);
+export const postSubmissionConfirmation = functions.firestore.document(constants.firestoreDocReferenceTalks).onCreate(submissionConfirmations.send);
 
 export const postSpeakerReminder = functions.https.onRequest(speakerReminders.send);
 
