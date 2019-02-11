@@ -24,6 +24,7 @@
     "@google-cloud/firestore": "^1.0.1",
     "@slack/client": "^4.8.0",
     "core-js": "^2.5.4",
+    "nodemailer": "^5.1.1",
     "primeicons": "~1.0.0",
     "primeng": "~7.0.5",
     "rxjs": "~6.3.3",
