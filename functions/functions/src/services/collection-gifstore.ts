@@ -1,18 +1,19 @@
 import * as admin from 'firebase-admin';
 import { Gif } from '../classes/gif';
+import * as constants from '../constants';
 
 const getAllActiveRecords = async (collectionName: string): Promise<FirebaseFirestore.QuerySnapshot> => {
     const db = admin.firestore();
     const collectionRef = db.collection(collectionName);
-    return collectionRef.where('isActive', '==', true).get()
+    return collectionRef.where(constants.firestoreQueryIsActive, constants.firestoreQueryEquals, true).get()
 }
 
 /** Obtain a gif link that hasn't been used recently (bygone: in the past). */
 export const getBygoneGif = async (): Promise<string> => {
-    return await getAllActiveRecords('gifstore')
+    return await getAllActiveRecords(constants.firestoreCollectionTalksGifstore)
         .then((snapshot) => {
             if (snapshot.empty) {
-                return 'No records found';
+                return constants.messageNoRecords;
             }
             const gifs: Gif[] = [];
             snapshot.forEach((doc) => {

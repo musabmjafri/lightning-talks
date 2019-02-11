@@ -1,18 +1,19 @@
 import * as admin from 'firebase-admin';
 import { TeamMember } from '../classes/teamMember';
+import * as constants from '../constants';
 
 const getAllActiveRecords = async (collectionName: string): Promise<FirebaseFirestore.QuerySnapshot> => {
     const db = admin.firestore();
     const collectionRef = db.collection(collectionName);
-    return collectionRef.where('isActive', '==', true).get()
+    return collectionRef.where(constants.firestoreQueryIsActive, constants.firestoreQueryEquals, true).get()
 }
 
 /** Get all Ligthing Talk current team members. */
 export const getAllTeamMembers = async (): Promise<any> => {
-    return getAllActiveRecords('team')
+    return getAllActiveRecords(constants.firestoreCollectionTeam)
         .then((snapshot) => {
             if (snapshot.empty) {
-                return 'No records found';
+                return constants.messageNoRecords;
             }
             const teamMembers: TeamMember[] = [];
             snapshot.forEach((doc) => {

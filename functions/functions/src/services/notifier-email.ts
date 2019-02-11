@@ -1,5 +1,6 @@
 import * as functions from 'firebase-functions';
 import * as nodemailer from 'nodemailer';
+import * as constants from '../constants';
 
 export const sendEmail = async (receivers: string, subject: string, message: string): Promise<any> => {
 
@@ -16,7 +17,7 @@ export const sendEmail = async (receivers: string, subject: string, message: str
 
     // Email data with unicode symbols
     const mailOptions = {
-        from: '"Lightning Talks" <lightning-talk@tenpearls.com>',
+        from: constants.emailSenderLightningTalks,
         to: receivers, // list of receivers
         subject: subject,
         //text: // plain text body
@@ -24,5 +25,5 @@ export const sendEmail = async (receivers: string, subject: string, message: str
     };
 
     const info = await transporter.sendMail(mailOptions)
-    return 'Message sent: ' + info.messageId;
+    return info.messageId;
 }

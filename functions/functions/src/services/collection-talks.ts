@@ -1,18 +1,19 @@
 import * as admin from 'firebase-admin';
 import { Talk } from '../classes/talk';
+import * as constants from '../constants';
 
 const getAllActiveRecords = async (collectionName: string): Promise<FirebaseFirestore.QuerySnapshot> => {
     const db = admin.firestore();
     const collectionRef = db.collection(collectionName);
-    return collectionRef.where('isActive', '==', true).get()
+    return collectionRef.where(constants.firestoreQueryIsActive, constants.firestoreQueryEquals, true).get()
 }
 
 /** Get all active Ligthing Talks */
 export const getAllActiveTalks = async (): Promise<any> => {
-    return getAllActiveRecords('talks')
+    return getAllActiveRecords(constants.firestoreCollectionTalks)
         .then((snapshot) => {
             if (snapshot.empty) {
-                return 'No records found';
+                return constants.messageNoRecords;
             }
             const talks: Talk[] = [];
             snapshot.forEach((doc) => {
