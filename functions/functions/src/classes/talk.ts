@@ -1,4 +1,5 @@
 export class Talk {
+    
     id: string;
     talkTitle: string;
     speakerNameList: Array<string>;
@@ -20,6 +21,7 @@ export class Talk {
         talkExcerpt: string, dateSubmission: Date, dateSchedule: Date, dateModified: Date, urlPresentation: string, urlVideo: string,
         dislikeCount: number, dislikeList: Array<string>, likeCount: number, likeList: Array<string>,
         isSpecialTalk: boolean, isActive: boolean) {
+
         this.id = id;
         this.talkTitle = talkTitle;
         this.speakerNameList = speakerNameList;

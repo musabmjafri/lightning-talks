@@ -9,20 +9,22 @@ const getAllActiveRecords = async (collectionName: string): Promise<FirebaseFire
 }
 
 /** Get all Ligthing Talk current team members. */
-export const getAllTeamMembers = async (): Promise<any> => {
-    return getAllActiveRecords(constants.firestoreCollectionTeam)
-        .then((snapshot) => {
-            if (snapshot.empty) {
-                return constants.messageNoRecords;
-            }
-            const teamMembers: TeamMember[] = [];
-            snapshot.forEach((doc) => {
-                const teamMember: TeamMember = new TeamMember(doc.id, doc.get('name'), doc.get('emailPrimary'), doc.get('emailSecondary'), doc.get('isActive'));
-                teamMembers.push(teamMember);
-            });
-            return teamMembers;
-        })
-        .catch((err) => {
-            return err;
+export const getAllTeamMembers = async (): Promise<TeamMember[] | string> => {
+
+    try {
+        const snapshot = await getAllActiveRecords(constants.firestoreCollectionTeam)
+
+        if (snapshot.empty) {
+            return constants.messageNoRecords;
+        }
+        const teamMembers: TeamMember[] = [];
+        snapshot.forEach((doc) => {
+            const teamMember: TeamMember = new TeamMember(doc.id, doc.get('name'), doc.get('emailPrimary'), doc.get('emailSecondary'), doc.get('isActive'));
+            teamMembers.push(teamMember);
         });
+        return teamMembers;
+    }
+    catch (err) {
+        return err;
+    }
 }
