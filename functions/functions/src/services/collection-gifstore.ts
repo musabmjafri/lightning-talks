@@ -15,7 +15,7 @@ export const getBygoneGif = async (): Promise<string> => {
         const snapshot = await getAllActiveRecords(constants.firestoreCollectionTalksGifstore)
 
         if (snapshot.empty) {
-            return constants.messageNoRecords;
+            throw new Error(constants.messageNoRecords);
         }
 
         const gifs: Gif[] = [];

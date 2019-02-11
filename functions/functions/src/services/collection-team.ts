@@ -15,7 +15,7 @@ export const getAllTeamMembers = async (): Promise<TeamMember[] | string> => {
         const snapshot = await getAllActiveRecords(constants.firestoreCollectionTeam)
 
         if (snapshot.empty) {
-            return constants.messageNoRecords;
+            throw new Error(constants.messageNoRecords);
         }
         const teamMembers: TeamMember[] = [];
         snapshot.forEach((doc) => {

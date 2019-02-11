@@ -15,7 +15,7 @@ export const getAllActiveTalks = async (): Promise<Talk[] | string> => {
         const snapshot = await getAllActiveRecords(constants.firestoreCollectionTalks);
 
         if (snapshot.empty) {
-            return constants.messageNoRecords;
+            throw new Error(constants.messageNoRecords);
         }
 
         const talks: Talk[] = [];
