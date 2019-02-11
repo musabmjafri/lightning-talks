@@ -29,7 +29,7 @@ export const postAnnoucement = functions.https.onRequest((request, response) => 
     // Personal subscriptions of 10P employees will be an improvement
 });
 
-export const slackBotEventListener = functions.https.onRequest((request, response) => {
+export const slackBot = functions.https.onRequest((request, response) => {
     // Receives Slackbot event payloads to respond back
 });
 
