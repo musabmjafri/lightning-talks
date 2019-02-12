@@ -25,8 +25,8 @@ export const sendEmail = async (receivers: string, subject: string, message: str
             html: message // html body
         };
 
-        const info = await transporter.sendMail(mailOptions)
-        return info.messageId;
+        const result = await transporter.sendMail(mailOptions)
+        return result.messageId;
     }
     catch (err) {
         return err;
