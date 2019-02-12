@@ -163,8 +163,8 @@ export const send = async (request: functions.Request, response: functions.Respo
 
     const upcomingTalk: Talk = await talks.getNextDayTalk();
     const gifLink = await gifstore.getBygoneGif();
-    const slackMessage = createAttachmentMessage(upcomingTalk, gifLink);
+    const announcementMessage = createAttachmentMessage(upcomingTalk, gifLink);
     const slackWebhooktoken = functions.config().slack.webhooktoken.general;
-    const result = await slack.postAnnoucement(slackWebhooktoken, JSON.stringify(slackMessage)); //TODO: Actual message
+    const result = await slack.postAnnoucement(slackWebhooktoken, JSON.stringify(announcementMessage));
     response.send(result);
 }
