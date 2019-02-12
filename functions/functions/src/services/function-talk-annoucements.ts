@@ -2,35 +2,24 @@ import * as functions from 'firebase-functions';
 import * as slack from './notifier-slack'
 import * as talks from './collection-talks';
 import * as gifstore from './collection-gifstore';
+import * as datetime from './datetime';
 import { Talk } from '../classes/talk';
-import { attachmentMessage, attachment, field, action } from '../interfaces/slack-attachment-message';
-import * as constants from '../constants';
+import { slackMessage, attachment, field, action } from '../interfaces/slack-message';
 import * as annconstants from '../constants/announcements';
 
-const getDayOfWeek = (date: Date): string => {
+const createAttachmentMessage = (upcomingTalk: Talk, gifLink: string): slackMessage => {
 
-    const dayNumber = date.getDay();
+    const dayOfWeek = datetime.getDayOfWeek(upcomingTalk.dateSchedule);
 
-    switch (dayNumber) {
-        case 1: return constants.monday; break;
-        case 2: return constants.tuesday; break;
-        case 3: return constants.wednesday; break;
-        case 4: return constants.thursday; break;
-        case 5: return constants.friday; break;
-        case 6: return constants.saturday; break;
-        default: return constants.sunday; break;
-    }
-}
-
-const createAttachmentMessage = (upcomingTalk: Talk, gifLink: string): attachmentMessage => {
-
-    const slackMessage: attachmentMessage = {
+    const announcementMessage: slackMessage = {
+        
+        text: '',
         attachments: []
     };
 
     const mainAttachment: attachment = {
 
-        fallback: annconstants.header + getDayOfWeek(upcomingTalk.dateSchedule), // Needs to be completed with full inline announcement
+        fallback: annconstants.header + dayOfWeek, // Needs to be completed with full inline announcement
         color: annconstants.attachmentColor,
         fields: [],
         actions: [],
@@ -40,7 +29,7 @@ const createAttachmentMessage = (upcomingTalk: Talk, gifLink: string): attachmen
     let mainAttachmentField: field = {
 
         title: '',
-        value: annconstants.header + getDayOfWeek(upcomingTalk.dateSchedule),
+        value: annconstants.header + dayOfWeek,
         short: false
     };
 
@@ -100,7 +89,7 @@ const createAttachmentMessage = (upcomingTalk: Talk, gifLink: string): attachmen
 
     mainAttachment.fields.push(mainAttachmentField);
 
-    slackMessage.attachments.push(mainAttachment);
+    announcementMessage.attachments.push(mainAttachment);
 
     const gifAttachment: attachment = {
 
@@ -111,7 +100,7 @@ const createAttachmentMessage = (upcomingTalk: Talk, gifLink: string): attachmen
         image_url: gifLink
     };
 
-    slackMessage.attachments.push(gifAttachment);
+    announcementMessage.attachments.push(gifAttachment);
 
     const actionAttachment: attachment = {
 
@@ -161,9 +150,9 @@ const createAttachmentMessage = (upcomingTalk: Talk, gifLink: string): attachmen
 
     actionAttachment.actions.push(actionAttachmentAction);
 
-    slackMessage.attachments.push(actionAttachment);
+    announcementMessage.attachments.push(actionAttachment);
 
-    return slackMessage;
+    return announcementMessage;
 }
 
 /** 
@@ -174,8 +163,8 @@ export const send = async (request: functions.Request, response: functions.Respo
 
     const upcomingTalk: Talk = await talks.getNextDayTalk();
     const gifLink = await gifstore.getBygoneGif();
-    const slackMessage = createAttachmentMessage(upcomingTalk, gifLink);
+    const announcementMessage = createAttachmentMessage(upcomingTalk, gifLink);
     const slackWebhooktoken = functions.config().slack.webhooktoken.general;
-    const result = await slack.postAnnoucement(slackWebhooktoken, JSON.stringify(slackMessage)); //TODO: Actual message
+    const result = await slack.postAnnoucement(slackWebhooktoken, JSON.stringify(announcementMessage));
     response.send(result);
 }

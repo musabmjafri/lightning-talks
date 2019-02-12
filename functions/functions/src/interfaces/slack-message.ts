@@ -1,5 +1,6 @@
-export interface attachmentMessage {
+export interface slackMessage {
     
+    text: string;
     attachments: attachment[];
 }
 

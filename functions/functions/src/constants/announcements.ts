@@ -1,5 +1,5 @@
 /* Slack Message Constants */
-export const header = '@channel, we have a :zap: *\'Lightning Talk\'* :zap: on ';
+export const header = 'Hello all, a :zap: *\'Lightning Talk\'* :zap: is coming up on ';
 export const footer = 'You can sign up for your very own Lightning Talk or follow the Talks schedule';
 
 /* Slack Attachment Styling */
