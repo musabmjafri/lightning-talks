@@ -1,9 +1,11 @@
+import { Timestamp } from "@google-cloud/firestore";
+
 export class Talk {
     
     id: string;
     talkTitle: string;
-    speakerNameList: Array<string>;
-    speakerEmailList: Array<string>;
+    speakerNameList: string[];
+    speakerEmailList: string[];
     talkExcerpt: string;
     dateSubmission: Date;
     dateTentative: Date;
@@ -18,8 +20,8 @@ export class Talk {
     isSpecialTalk: boolean;
     isActive: boolean;
 
-    constructor(id: string, talkTitle: string, speakerNameList: Array<string>, speakerEmailList: Array<string>,
-        talkExcerpt: string, dateSubmission: Date, dateTentative: Date, dateSchedule: Date, dateModified: Date,
+    constructor(id: string, talkTitle: string, speakerNameList: string[], speakerEmailList: string[],
+        talkExcerpt: string, dateSubmission: Timestamp, dateTentative: Timestamp, dateSchedule: Timestamp, dateModified: Timestamp,
         urlPresentation: string, urlVideo: string, dislikeCount: number, dislikeList: Array<string>, likeCount: number,
         likeList: Array<string>, isSpecialTalk: boolean, isActive: boolean) {
 
@@ -28,10 +30,10 @@ export class Talk {
         this.speakerNameList = speakerNameList;
         this.speakerEmailList = speakerEmailList;
         this.talkExcerpt = talkExcerpt;
-        this.dateSubmission = dateSubmission;
-        this.dateTentative = dateTentative;
-        this.dateSchedule = dateSchedule;
-        this.dateModified = dateModified;
+        this.dateSubmission = dateSubmission.toDate();
+        this.dateTentative = dateTentative.toDate();
+        this.dateSchedule = dateSchedule.toDate();
+        this.dateModified = dateModified.toDate();
         this.urlPresentation = urlPresentation;
         this.urlVideo = urlVideo;
         this.dislikeCount = dislikeCount;

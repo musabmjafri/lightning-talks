@@ -1,18 +1,58 @@
-import * as admin from 'firebase-admin';
+import * as firestore from './firestore';
 import { Talk } from '../classes/talk';
+import { Timestamp } from '@google-cloud/firestore';
 import * as constants from '../constants';
+import * as firconstants from '../constants/firestore';
 
-const getAllActiveRecords = async (collectionName: string): Promise<FirebaseFirestore.QuerySnapshot> => {
-    const db = admin.firestore();
-    const collectionRef = db.collection(collectionName);
-    return collectionRef.where(constants.firestoreQueryIsActive, constants.firestoreQueryEquals, true).get()
+const getNextWork = (date: Date): Date => {
+
+    date.setDate(date.getDate() + 1); // next day
+
+    if (date.getDay() === 0) {
+        date.setDate(date.getDate() + 1);
+    }
+    else if (date.getDay() === 6) {
+        date.setDate(date.getDate() + 2);
+    }
+
+    return date;
+}
+
+/** Get a Ligthing Talks that is upcoming in 1 working day */
+export const getNextDayTalk = async (): Promise<Talk> => {
+
+    try {
+        const currentWorkingTimeStamp: Timestamp = Timestamp.fromDate(new Date());
+        const twoDaysLaterWorkingTimestamp: Timestamp = Timestamp.fromDate(getNextWork(new Date()));
+        const collectionRef = await firestore.getCollectionReference(firconstants.collectionTalks);
+        const snapshot = await collectionRef.where(firconstants.filterDateSchedule, firconstants.queryGreater, currentWorkingTimeStamp)
+            .where(firconstants.filterDateSchedule, firconstants.queryGreater, twoDaysLaterWorkingTimestamp)
+            .limit(1)
+            .get();
+
+        if (snapshot.empty) {
+            throw new Error(constants.messageNoRecords);
+        }
+
+        const document = snapshot.docs[0];
+        const talk: Talk = new Talk(document.get('id'), document.get('talkTitle'), document.get('speakerNameList'), document.get('speakerEmailList'),
+        document.get('talkExcerpt'), document.get('dateSubmission'), document.get('dateTentative'), document.get('dateSchedule'), document.get('dateModified'),
+        document.get('urlPresentation'), document.get('urlVideo'), document.get('dislikeCount'), document.get('dislikeList'), document.get('likeCount'),
+        document.get('likeList'), document.get('isSpecialTalk'), document.get('isActive'));
+
+        return talk;
+    }
+    catch (err) {
+        return err;
+    }
 }
 
 /** Get all active Ligthing Talks */
 export const getAllActiveTalks = async (): Promise<Talk[] | string> => {
 
     try {
-        const snapshot = await getAllActiveRecords(constants.firestoreCollectionTalks);
+        const collectionRef = await firestore.getCollectionReference(firconstants.collectionTalks);
+        const snapshot = await collectionRef.where(firconstants.filterIsActive, firconstants.queryEquals, true).get();
 
         if (snapshot.empty) {
             throw new Error(constants.messageNoRecords);
