@@ -1,13 +1,14 @@
 import * as firestore from './firestore';
 import { TeamMember } from '../classes/teamMember';
 import * as constants from '../constants';
+import * as firconstants from '../constants/firestore';
 
 /** Get all Ligthing Talk current team members. */
 export const getAllTeamMembers = async (): Promise<TeamMember[] | string> => {
 
     try {
-        const collectionRef = await firestore.getCollectionReference(constants.firestoreCollectionTeam);
-        const snapshot = await collectionRef.where(constants.firestoreQueryIsActive, constants.firestoreQueryEquals, true).get();
+        const collectionRef = await firestore.getCollectionReference(firconstants.collectionTeam);
+        const snapshot = await collectionRef.where(firconstants.filterIsActive, firconstants.queryEquals, true).get();
 
         if (snapshot.empty) {
             throw new Error(constants.messageNoRecords);
