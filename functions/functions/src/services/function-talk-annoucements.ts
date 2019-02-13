@@ -5,11 +5,16 @@ import * as gifstore from './collection-gifstore';
 import * as datetime from './datetime';
 import { Talk } from '../classes/talk';
 import { slackMessage, attachment, field, action } from '../interfaces/slack-message';
+import * as constants from '../constants/';
 import * as annconstants from '../constants/announcements';
 
 const createAttachmentMessage = (upcomingTalk: Talk, gifLink: string): slackMessage => {
 
-    const dayOfWeek = datetime.getDayOfWeek(upcomingTalk.dateSchedule);
+    const speakerNames = upcomingTalk.speakerNameList.join(' - ');
+    const talkDateTime = upcomingTalk.dateSchedule;
+    const dayOfWeek = datetime.getDayOfWeek(talkDateTime);
+    const dayOfMonth = datetime.getDayOfMonth(talkDateTime);
+    const month = datetime.getMonth(talkDateTime);
 
     const announcementMessage: slackMessage = {
 
@@ -18,7 +23,13 @@ const createAttachmentMessage = (upcomingTalk: Talk, gifLink: string): slackMess
 
     const mainAttachment: attachment = {
 
-        fallback: annconstants.header + dayOfWeek, // Needs to be completed with full inline announcement
+        fallback: annconstants.header + dayOfWeek +
+            '\n*' + annconstants.titleHeader + ':* ' + upcomingTalk.talkTitle +
+            '\n*' + annconstants.descriptionHeader + ':* ' + upcomingTalk.talkExcerpt +
+            '\n*' + annconstants.speakersHeader + ':* ' + speakerNames +
+            '\n*' + annconstants.dateHeader + ':* ' + dayOfWeek + ' ' + dayOfMonth + ' ' + month +
+            '\n*' + annconstants.timeHeader + ':* ' + (talkDateTime.getHours() + 5) + ':' + talkDateTime.getMinutes() + annconstants.timeSuffix +
+            '\n*' + annconstants.venueHeader + ':* ' + annconstants.venueValue,
         color: annconstants.attachmentColor,
         fields: []
     };
@@ -53,7 +64,7 @@ const createAttachmentMessage = (upcomingTalk: Talk, gifLink: string): slackMess
     mainAttachmentField = {
 
         title: annconstants.speakersHeader,
-        value: upcomingTalk.speakerNameList.toString(),
+        value: speakerNames,
         short: true
     };
 
@@ -62,7 +73,7 @@ const createAttachmentMessage = (upcomingTalk: Talk, gifLink: string): slackMess
     mainAttachmentField = {
 
         title: annconstants.dateHeader,
-        value: upcomingTalk.dateSchedule.toDateString(),
+        value: dayOfWeek + ', ' + dayOfMonth + ' ' + month,
         short: true
     };
 
@@ -80,7 +91,7 @@ const createAttachmentMessage = (upcomingTalk: Talk, gifLink: string): slackMess
     mainAttachmentField = {
 
         title: annconstants.timeHeader,
-        value: upcomingTalk.dateSchedule.toTimeString() + annconstants.timeSuffix,
+        value: (talkDateTime.getHours() + 5) + ':' + talkDateTime.getMinutes() + annconstants.timeSuffix,
         short: true
     };
 
@@ -99,7 +110,7 @@ const createAttachmentMessage = (upcomingTalk: Talk, gifLink: string): slackMess
 
     const actionAttachment: attachment = {
 
-        fallback: annconstants.footer, // Needs to be completed with full inline footer
+        fallback: annconstants.footer + ' at ' + constants.url,
         color: annconstants.attachmentColor,
         fields: [],
         actions: []
