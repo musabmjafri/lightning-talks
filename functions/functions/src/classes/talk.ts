@@ -14,16 +14,16 @@ export class Talk {
     urlPresentation: string;
     urlVideo: string;
     dislikeCount: number;
-    dislikeList: Array<string>;
+    dislikeList: string[];
     likeCount: number;
-    likeList: Array<string>;
+    likeList: string[];
     isSpecialTalk: boolean;
     isActive: boolean;
 
     constructor(id: string, talkTitle: string, speakerNameList: string[], speakerEmailList: string[],
         talkExcerpt: string, dateSubmission: Timestamp, dateTentative: Timestamp, dateSchedule: Timestamp, dateModified: Timestamp,
-        urlPresentation: string, urlVideo: string, dislikeCount: number, dislikeList: Array<string>, likeCount: number,
-        likeList: Array<string>, isSpecialTalk: boolean, isActive: boolean) {
+        urlPresentation: string, urlVideo: string, dislikeCount: number, dislikeList: string[], likeCount: number,
+        likeList: string[], isSpecialTalk: boolean, isActive: boolean) {
 
         this.id = id;
         this.talkTitle = talkTitle;
