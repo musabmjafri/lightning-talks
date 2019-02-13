@@ -13,7 +13,7 @@ export const getNextDayTalk = async (): Promise<Talk> => {
         const twoDaysLaterWorkingTimestamp: Timestamp = Timestamp.fromDate(datetime.getNextWork(new Date()));
         const collectionRef = await firestore.getCollectionReference(firconstants.collectionTalks);
         const snapshot = await collectionRef.where(firconstants.filterDateSchedule, firconstants.queryGreater, currentWorkingTimeStamp)
-            .where(firconstants.filterDateSchedule, firconstants.queryGreater, twoDaysLaterWorkingTimestamp)
+            .where(firconstants.filterDateSchedule, firconstants.queryLesser, twoDaysLaterWorkingTimestamp)
             .limit(1)
             .get();
 

@@ -12,8 +12,7 @@ const createAttachmentMessage = (upcomingTalk: Talk, gifLink: string): slackMess
     const dayOfWeek = datetime.getDayOfWeek(upcomingTalk.dateSchedule);
 
     const announcementMessage: slackMessage = {
-        
-        text: '',
+
         attachments: []
     };
 
@@ -21,9 +20,7 @@ const createAttachmentMessage = (upcomingTalk: Talk, gifLink: string): slackMess
 
         fallback: annconstants.header + dayOfWeek, // Needs to be completed with full inline announcement
         color: annconstants.attachmentColor,
-        fields: [],
-        actions: [],
-        image_url: ''
+        fields: []
     };
 
     let mainAttachmentField: field = {
@@ -33,7 +30,7 @@ const createAttachmentMessage = (upcomingTalk: Talk, gifLink: string): slackMess
         short: false
     };
 
-    mainAttachment.fields.push(mainAttachmentField);
+    mainAttachment.fields = [mainAttachmentField];
 
     mainAttachmentField = {
 
@@ -89,14 +86,12 @@ const createAttachmentMessage = (upcomingTalk: Talk, gifLink: string): slackMess
 
     mainAttachment.fields.push(mainAttachmentField);
 
-    announcementMessage.attachments.push(mainAttachment);
+    announcementMessage.attachments = [mainAttachment];
 
     const gifAttachment: attachment = {
 
         fallback: gifLink,
         color: annconstants.attachmentColor,
-        fields: [],
-        actions: [],
         image_url: gifLink
     };
 
@@ -107,8 +102,7 @@ const createAttachmentMessage = (upcomingTalk: Talk, gifLink: string): slackMess
         fallback: annconstants.footer, // Needs to be completed with full inline footer
         color: annconstants.attachmentColor,
         fields: [],
-        actions: [],
-        image_url: ''
+        actions: []
     };
 
     const actionAttachmentField: field = {
@@ -118,7 +112,7 @@ const createAttachmentMessage = (upcomingTalk: Talk, gifLink: string): slackMess
         short: false
     };
 
-    actionAttachment.fields.push(actionAttachmentField);
+    actionAttachment.fields = [actionAttachmentField];
 
     let actionAttachmentAction: action = {
 
@@ -128,7 +122,7 @@ const createAttachmentMessage = (upcomingTalk: Talk, gifLink: string): slackMess
         url: annconstants.signupUrl
     }
 
-    actionAttachment.actions.push(actionAttachmentAction);
+    actionAttachment.actions = [actionAttachmentAction];
 
     actionAttachmentAction = {
 

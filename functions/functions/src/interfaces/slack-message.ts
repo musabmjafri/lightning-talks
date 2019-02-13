@@ -1,7 +1,7 @@
 export interface slackMessage {
     
-    text: string;
-    attachments: attachment[];
+    text?: string;
+    attachments?: attachment[];
 }
 
 export interface attachment {
@@ -11,13 +11,13 @@ export interface attachment {
     color: string;
 
     // Only in main part and action buttons part
-    fields: field[];
+    fields?: field[];
 
     // Only in action buttons part
-    actions: action[];
+    actions?: action[];
 
     // Only in gif part
-    image_url: string;
+    image_url?: string;
 }
 
 export interface field {
