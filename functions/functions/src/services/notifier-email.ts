@@ -11,14 +11,14 @@ export const sendEmail = async (receivers: string, subject: string, message: str
             port: functions.config().email.port, // or 587
             secure: false, // true for 465, false for other ports
             auth: {
-                user: functions.config().email.id,
+                user: functions.config().email.username,
                 pass: functions.config().email.password
             }
         });
 
         // Email data with unicode symbols
         const mailOptions = {
-            from: constants.emailSenderLightningTalks,
+            from: constants.title + ' <' + constants.email + '>',
             to: receivers, // list of receivers
             subject: subject,
             //text: // plain text body
