@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { GeneralShellComponent } from './shell/general/general-shell.component';
+import { LoginComponent } from './auth/login/login.component';
 
 const routes: Routes = [
   {
@@ -9,7 +10,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/landing-page',
+        redirectTo: '/login',
         pathMatch: 'full',
       },
       {
@@ -17,6 +18,10 @@ const routes: Routes = [
         loadChildren: './home/home.module#HomeModule',
       },
     ],
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
   },
 ];
 
