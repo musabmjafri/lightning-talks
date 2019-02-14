@@ -1,7 +1,7 @@
 import { Timestamp } from "@google-cloud/firestore";
 
 export class Talk {
-    
+
     id: string;
     talkTitle: string;
     speakerNameList: string[];

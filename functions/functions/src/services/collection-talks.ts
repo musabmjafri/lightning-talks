@@ -12,8 +12,8 @@ export const getNextDayTalk = async (): Promise<Talk> => {
         const currentWorkingTimeStamp: Timestamp = Timestamp.fromDate(new Date());
         const twoDaysLaterWorkingTimestamp: Timestamp = Timestamp.fromDate(datetime.getNextWork(new Date()));
         const collectionRef = await firestore.getCollectionReference(firconstants.collectionTalks);
-        const snapshot = await collectionRef.where(firconstants.filterDateSchedule, firconstants.queryGreater, currentWorkingTimeStamp)
-            .where(firconstants.filterDateSchedule, firconstants.queryGreater, twoDaysLaterWorkingTimestamp)
+        const snapshot = await collectionRef.where('dateSchedule', firconstants.queryGreater, currentWorkingTimeStamp)
+            .where('dateSchedule', firconstants.queryLesser, twoDaysLaterWorkingTimestamp)
             .limit(1)
             .get();
 
@@ -39,7 +39,7 @@ export const getAllActiveTalks = async (): Promise<Talk[] | string> => {
 
     try {
         const collectionRef = await firestore.getCollectionReference(firconstants.collectionTalks);
-        const snapshot = await collectionRef.where(firconstants.filterIsActive, firconstants.queryEquals, true).get();
+        const snapshot = await collectionRef.where('isActive', firconstants.queryEquals, true).get();
 
         if (snapshot.empty) {
             throw new Error(constants.messageNoRecords);

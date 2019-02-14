@@ -8,7 +8,7 @@ import * as firconstants from './constants/firestore';
 
 admin.initializeApp({ credential: admin.credential.applicationDefault() });
 
-export const postSubmissionConfirmation = functions.firestore.document(firconstants.docReferenceTalks).onCreate(submissionConfirmations.send);
+export const postSubmissionConfirmation = functions.firestore.document(firconstants.collectionTalks + '/{' + firconstants.documentTalk + '}').onCreate(submissionConfirmations.send);
 
 export const postSpeakerReminder = functions.https.onRequest(speakerReminders.send);
 
