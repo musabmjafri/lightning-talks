@@ -2,11 +2,10 @@ import * as firestore from './firestore';
 import * as datetime from './datetime';
 import { Talk } from '../classes/talk';
 import { Timestamp } from '@google-cloud/firestore';
-import * as constants from '../constants';
 import * as firconstants from '../constants/firestore';
 
 /** Get a Ligthing Talks that is upcoming in 1 working day */
-export const getNextDayTalk = async (): Promise<Talk> => {
+export const getNextDayTalk = async (): Promise<Talk | undefined> => {
 
     try {
         const currentWorkingTimeStamp: Timestamp = Timestamp.fromDate(new Date());
@@ -18,7 +17,7 @@ export const getNextDayTalk = async (): Promise<Talk> => {
             .get();
 
         if (snapshot.empty) {
-            throw new Error(constants.messageNoRecords);
+            return undefined;
         }
 
         const document = snapshot.docs[0];
@@ -35,14 +34,14 @@ export const getNextDayTalk = async (): Promise<Talk> => {
 }
 
 /** Get all active Ligthing Talks */
-export const getAllActiveTalks = async (): Promise<Talk[] | string> => {
+export const getAllActiveTalks = async (): Promise<Talk[] | undefined> => {
 
     try {
         const collectionRef = await firestore.getCollectionReference(firconstants.collectionTalks);
         const snapshot = await collectionRef.where('isActive', firconstants.queryEquals, true).get();
 
         if (snapshot.empty) {
-            throw new Error(constants.messageNoRecords);
+            return undefined;
         }
 
         const talks: Talk[] = [];

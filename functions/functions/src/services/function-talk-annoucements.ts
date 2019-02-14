@@ -175,15 +175,20 @@ const createAttachmentMessage = (upcomingTalk: Talk, gifLink: string): IncomingW
  */
 export const send = async (request: functions.Request, response: functions.Response) => {
 
-    const upcomingTalk: Talk = await talks.getNextDayTalk();
+    const upcomingTalk = await talks.getNextDayTalk();
     const gif = await gifstore.getBygoneGif();
-    const announcementMessage = createAttachmentMessage(upcomingTalk, gif.link);
-    const slackWebhooktoken = functions.config().slack.webhooktoken.general;
-    const result = await slack.postAnnoucement(slackWebhooktoken, announcementMessage);
 
-    if (result.text === 'ok') {
-        await gifstore.setGifUsed(gif.id);
+    if (upcomingTalk !== undefined && gif !== undefined) {
+        const announcementMessage = createAttachmentMessage(upcomingTalk, gif.link);
+        const slackWebhooktoken = functions.config().slack.webhooktoken.general;
+        const result = await slack.postAnnoucement(slackWebhooktoken, announcementMessage);
+
+        if (result.text === 'ok') {
+            await gifstore.setGifUsed(gif.id);
+        }
+        
+        response.send(result.text);
     }
 
-    response.send(result.text);
+    response.send(constants.messageNoRecords);
 }

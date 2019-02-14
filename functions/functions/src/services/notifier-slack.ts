@@ -11,6 +11,6 @@ export const postAnnoucement = async (channelToken: string, message: IncomingWeb
         return result;
     }
     catch (err) {
-        return err;
+        return err.message;
     }
 }

@@ -1,11 +1,10 @@
 import * as firestore from './firestore';
 import { Gif } from '../classes/gif';
-import * as constants from '../constants';
 import * as firconstants from '../constants/firestore';
 import { Timestamp } from '@google-cloud/firestore';
 
 /** Obtain a gif that hasn't been used recently (bygone: in the past). */
-export const getBygoneGif = async (): Promise<Gif> => {
+export const getBygoneGif = async (): Promise<Gif | undefined> => {
 
     try {
         const collectionRef = await firestore.getCollectionReference(firconstants.collectionTalksGifstore);
@@ -15,7 +14,7 @@ export const getBygoneGif = async (): Promise<Gif> => {
             .get();
 
         if (snapshot.empty) {
-            throw new Error(constants.messageNoRecords);
+            return undefined;
         }
 
         const doc = snapshot.docs[0];
