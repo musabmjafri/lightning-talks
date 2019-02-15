@@ -14,4 +14,9 @@ export class TeamMember {
         this.emailSecondary = emailSecondary;
         this.isActive = isActive;
     }
+
+    static documentToObject (document: FirebaseFirestore.QueryDocumentSnapshot) : TeamMember {
+    
+        return new TeamMember(document.id, document.get('name'), document.get('emailPrimary'), document.get('emailSecondary'), document.get('isActive'));
+    }
 }

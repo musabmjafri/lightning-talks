@@ -21,10 +21,7 @@ export const getNextDayTalk = async (): Promise<Talk | undefined> => {
         }
 
         const document = snapshot.docs[0];
-        const talk: Talk = new Talk(document.get('id'), document.get('talkTitle'), document.get('speakerNameList'), document.get('speakerEmailList'),
-            document.get('talkExcerpt'), document.get('dateSubmission'), document.get('dateTentative'), document.get('dateSchedule'), document.get('dateModified'),
-            document.get('urlPresentation'), document.get('urlVideo'), document.get('dislikeCount'), document.get('dislikeList'), document.get('likeCount'),
-            document.get('likeList'), document.get('isSpecialTalk'), document.get('isActive'));
+        const talk: Talk = Talk.documentToObject(document);
 
         return talk;
     }
@@ -46,11 +43,8 @@ export const getAllActiveTalks = async (): Promise<Talk[] | undefined> => {
 
         const talks: Talk[] = [];
 
-        snapshot.forEach((doc) => {
-            const talk: Talk = new Talk(doc.get('id'), doc.get('talkTitle'), doc.get('speakerNameList'), doc.get('speakerEmailList'),
-                doc.get('talkExcerpt'), doc.get('dateSubmission'), doc.get('dateTentative'), doc.get('dateSchedule'), doc.get('dateModified'),
-                doc.get('urlPresentation'), doc.get('urlVideo'), doc.get('dislikeCount'), doc.get('dislikeList'), doc.get('likeCount'),
-                doc.get('likeList'), doc.get('isSpecialTalk'), doc.get('isActive'));
+        snapshot.forEach((document) => {
+            const talk: Talk = Talk.documentToObject(document);
             talks.push(talk);
         });
 

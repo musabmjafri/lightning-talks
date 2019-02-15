@@ -15,8 +15,8 @@ export const getAllTeamMembers = async (): Promise<TeamMember[] | undefined> => 
 
         const teamMembers: TeamMember[] = [];
 
-        snapshot.forEach((doc) => {
-            const teamMember: TeamMember = new TeamMember(doc.id, doc.get('name'), doc.get('emailPrimary'), doc.get('emailSecondary'), doc.get('isActive'));
+        snapshot.forEach((document) => {
+            const teamMember: TeamMember = TeamMember.documentToObject(document);
             teamMembers.push(teamMember);
         });
 
