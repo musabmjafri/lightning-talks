@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { PrimeNgModule } from './prime-ng/prime-ng.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
+import { AuthModule } from './auth/auth.module';
 import { ShellModule } from './shell/shell.module';
 
 @NgModule({
@@ -18,6 +19,7 @@ import { ShellModule } from './shell/shell.module';
     PrimeNgModule,
     CoreModule,
     ShellModule,
+    AuthModule,
     AppRoutingModule,
   ],
   providers: [],

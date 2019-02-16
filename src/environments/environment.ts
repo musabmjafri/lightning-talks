@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  cogsApiUrl: 'http://10.0.0.159:1234',
 };
 
 /*

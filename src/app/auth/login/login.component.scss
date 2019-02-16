@@ -1,0 +1,28 @@
+.login-wrapper {
+    padding: 150px;
+    text-align: center;
+}
+.ui-card {
+  padding: 50px !important;
+}
+
+.login-card {
+    padding: 50px;
+    display: inline-block;
+}
+
+.login-logo {
+   img {
+     max-width: 200px;
+   }
+   background-color: white;
+}
+
+.login-button {
+    width: 75%;
+}
+
+.login-background {
+    background: url('/assets/login-background.png');
+    background-size: cover;
+}
