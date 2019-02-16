@@ -1,4 +1,5 @@
 import { Timestamp } from "@google-cloud/firestore";
+import { talkDocument } from "../interfaces/talk-document";
 
 export class Talk {
 
@@ -44,12 +45,33 @@ export class Talk {
         this.isActive = isActive;
     }
 
-    static documentToObject (document: FirebaseFirestore.QueryDocumentSnapshot) : Talk {
-    
+    static snapshotToObject(document: FirebaseFirestore.QueryDocumentSnapshot): Talk {
+
         return new Talk(document.id, document.get('talkTitle'), document.get('speakerNameList'), document.get('speakerEmailList'), document.get('speakerSlackList'),
-        document.get('talkExcerpt'), document.get('dateSubmitted'), document.get('dateScheduled'), document.get('dateModified'),
-        document.get('urlPresentation'), document.get('urlVideo'), document.get('dislikeCount'), document.get('dislikeList'), document.get('likeCount'),
-        document.get('likeList'), document.get('isSpecialTalk'), document.get('isActive'));
+            document.get('talkExcerpt'), document.get('dateSubmitted'), document.get('dateScheduled'), document.get('dateModified'),
+            document.get('urlPresentation'), document.get('urlVideo'), document.get('dislikeCount'), document.get('dislikeList'),
+            document.get('likeCount'), document.get('likeList'), document.get('isSpecialTalk'), document.get('isActive'));
     }
-    
+
+    static objectToDocument(object: Talk): talkDocument {
+
+        return {
+            talkTitle: object.talkTitle,
+            speakerNameList: object.speakerNameList,
+            speakerEmailList: object.speakerEmailList,
+            speakerSlackList: object.speakerSlackList,
+            talkExcerpt: object.talkExcerpt,
+            dateSubmitted: Timestamp.fromDate(new Date(object.dateSubmitted)),
+            dateScheduled: Timestamp.fromDate(new Date(object.dateScheduled)),
+            dateModified: Timestamp.fromDate(new Date(object.dateModified)),
+            urlPresentation: object.urlPresentation,
+            urlVideo: object.urlVideo,
+            dislikeCount: object.dislikeCount,
+            dislikeList: object.dislikeList,
+            likeCount: object.likeCount,
+            likeList: object.likeList,
+            isSpecialTalk: object.isSpecialTalk,
+            isActive: object.isActive
+        }
+    }
 }

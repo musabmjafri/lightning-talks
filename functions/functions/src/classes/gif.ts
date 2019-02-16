@@ -15,7 +15,7 @@ export class Gif {
         this.isActive = isActive;
     }
 
-    static documentToObject (document: FirebaseFirestore.QueryDocumentSnapshot) : Gif {
+    static snapshotToObject (document: FirebaseFirestore.QueryDocumentSnapshot) : Gif {
     
         return new Gif(document.id, document.get('link'), document.get('lastUsed'), document.get('isActive'));
     }

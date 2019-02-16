@@ -18,7 +18,7 @@ export const getBygoneGif = async (): Promise<Gif | undefined> => {
         }
 
         const document = snapshot.docs[0];
-        const gif: Gif = Gif.documentToObject(document);
+        const gif: Gif = Gif.snapshotToObject(document);
         return gif;
     }
     catch (err) {

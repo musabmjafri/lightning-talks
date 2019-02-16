@@ -2,9 +2,10 @@ import * as firestore from './firestore';
 import * as datetime from './datetime';
 import { Talk } from '../classes/talk';
 import { Timestamp } from '@google-cloud/firestore';
+import { talkDocument } from '../interfaces/talk-document';
 import * as firconstants from '../constants/firestore';
 
-/** Get a Ligthing Talks that is upcoming in 1 working day */
+/** Get a Lightning Talks that is upcoming in 1 working day */
 export const getNextDayTalk = async (): Promise<Talk | undefined> => {
 
     try {
@@ -21,7 +22,7 @@ export const getNextDayTalk = async (): Promise<Talk | undefined> => {
         }
 
         const document = snapshot.docs[0];
-        const talk: Talk = Talk.documentToObject(document);
+        const talk: Talk = Talk.snapshotToObject(document);
 
         return talk;
     }
@@ -30,7 +31,7 @@ export const getNextDayTalk = async (): Promise<Talk | undefined> => {
     }
 }
 
-/** Get all active Ligthing Talks */
+/** Get all active Lightning Talks */
 export const getAllActiveTalks = async (): Promise<Talk[] | undefined> => {
 
     try {
@@ -44,7 +45,7 @@ export const getAllActiveTalks = async (): Promise<Talk[] | undefined> => {
         const talks: Talk[] = [];
 
         snapshot.forEach((document) => {
-            const talk: Talk = Talk.documentToObject(document);
+            const talk: Talk = Talk.snapshotToObject(document);
             talks.push(talk);
         });
 
@@ -53,4 +54,12 @@ export const getAllActiveTalks = async (): Promise<Talk[] | undefined> => {
     catch (err) {
         return err;
     }
+}
+
+/** Submit a Lightning Talk */
+export const postTalk = async (newTalk: Talk): Promise<talkDocument> => {
+
+    const collectionRef = await firestore.getCollectionReference(firconstants.collectionTalks);
+    await collectionRef.doc(newTalk.id).set(Talk.objectToDocument(newTalk));
+    return Talk.objectToDocument(newTalk);
 }
