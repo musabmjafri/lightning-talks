@@ -9,7 +9,7 @@ export const post = async (request: functions.Request, response: functions.Respo
         const newTalk: Talk = request.body;
         newTalk.dateModified = new Date();
         const submittedDate = new Date(newTalk.dateSubmitted);
-        let talkTitle = newTalk.talkTitle.replace('.','').replace(' &','').toLowerCase();
+        let talkTitle = newTalk.talkTitle.replace('.','').replace(' &','').replace('?', '').toLowerCase();
         const talkTitleWords = talkTitle.split(' ');
         talkTitle = '';
         let index;
