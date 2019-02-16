@@ -1,8 +1,10 @@
 import * as functions from 'firebase-functions';
 import * as talks from './collection-talks';
 import { Talk } from '../classes/talk';
-import { talkDocument } from '../interfaces/talk-document';
 
+/** 
+ * Post a Talk submission.
+ */
 export const post = async (request: functions.Request, response: functions.Response) => {
 
     try {
@@ -19,8 +21,8 @@ export const post = async (request: functions.Request, response: functions.Respo
         }
 
         newTalk.id = submittedDate.getFullYear() + ('0' + (submittedDate.getMonth() + 1)).slice(-2) + ('0' + submittedDate.getDate()).slice(-2) + talkTitle;
-        const submitedTalk: talkDocument = await talks.postTalk(newTalk);
-        response.send(submitedTalk);
+        await talks.postTalk(newTalk);
+        response.send(newTalk.id);
     }
     catch (err) {
         response.send(err.message);

@@ -1,5 +1,6 @@
 import * as constants from '../constants';
 
+/** Get day of the week string from date. */
 export const getDayOfWeek = (date: Date): string => {
 
     const dayNumber = date.getDay();
@@ -15,6 +16,7 @@ export const getDayOfWeek = (date: Date): string => {
     }
 }
 
+/** Get day of the month string from date */
 export const getDayOfMonth = (date: Date): string => {
 
     const dayNumber = date.getDate();
@@ -31,6 +33,7 @@ export const getDayOfMonth = (date: Date): string => {
     }
 }
 
+/** Get month string from date */
 export const getMonth = (date: Date): string => {
 
     const monthNumber = date.getMonth();
@@ -51,6 +54,7 @@ export const getMonth = (date: Date): string => {
     }
 }
 
+/** Get current day's next working day */
 export const getNextWork = (date: Date): Date => {
 
     date.setDate(date.getDate() + 1); // Next day
