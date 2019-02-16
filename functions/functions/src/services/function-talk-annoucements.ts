@@ -20,7 +20,7 @@ const createAttachmentMessage = (upcomingTalk: Talk, gifLink: string): IncomingW
         default: speakerNames = upcomingTalk.speakerNameList.join(', '); break;
     }
 
-    const talkDateTime = upcomingTalk.dateSchedule;
+    const talkDateTime = upcomingTalk.dateScheduled;
     const dayOfWeek = datetime.getDayOfWeek(talkDateTime);
     const dayOfMonth = datetime.getDayOfMonth(talkDateTime);
     const month = datetime.getMonth(talkDateTime);
