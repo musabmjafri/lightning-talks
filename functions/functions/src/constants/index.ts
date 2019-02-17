@@ -4,6 +4,7 @@ export const email = 'lightning-talk@tenpearls.com';
 export const url = 'https://lightningtalks.10pearls.com';
 
 /* Response Messages and Errors */
+export const unauthorizedAccess = 'Unauthorized Access';
 export const messageNoRecords = 'No records found';
 
 /* Days of Week */

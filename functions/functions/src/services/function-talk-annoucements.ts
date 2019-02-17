@@ -3,6 +3,7 @@ import * as slack from './notifier-slack'
 import * as talks from './collection-talks';
 import * as gifstore from './collection-gifstore';
 import * as datetime from './datetime';
+import * as auth from './auth';
 import { Talk } from '../classes/talk';
 import { attachmentField } from '../interfaces/slack-message';
 import { IncomingWebhookSendArguments, MessageAttachment, AttachmentAction } from '@slack/client';
@@ -175,20 +176,27 @@ const createAttachmentMessage = (upcomingTalk: Talk, gifLink: string): IncomingW
  */
 export const send = async (request: functions.Request, response: functions.Response) => {
 
-    const upcomingTalk = await talks.getNextDayTalk();
-    const gif = await gifstore.getBygoneGif();
+    try {
+        await auth.verifyApikey(request);
 
-    if (upcomingTalk !== undefined && gif !== undefined) {
-        const announcementMessage = createAttachmentMessage(upcomingTalk, gif.link);
-        const slackWebhooktoken = functions.config().slack.webhooktoken.general;
-        const result = await slack.postAnnoucement(slackWebhooktoken, announcementMessage);
+        const upcomingTalk = await talks.getNextDayTalk();
+        const gif = await gifstore.getBygoneGif();
 
-        if (result.text === 'ok') {
-            await gifstore.setGifUsed(gif.id);
+        if (upcomingTalk !== undefined && gif !== undefined) {
+            const announcementMessage = createAttachmentMessage(upcomingTalk, gif.link);
+            const slackWebhooktoken = functions.config().slack.webhooktoken.general;
+            const result = await slack.postAnnoucement(slackWebhooktoken, announcementMessage);
+
+            if (result.text === 'ok') {
+                await gifstore.setGifUsed(gif.id);
+            }
+
+            response.send(result.text);
         }
-        
-        response.send(result.text);
-    }
 
-    response.send(constants.messageNoRecords);
+        response.send(constants.messageNoRecords);
+    }
+    catch (err) {
+        response.send(err.message);
+    }
 }
