@@ -17,4 +17,4 @@ export const postTalkAnnoucement = functions.https.onRequest(talkAnnoucements.se
 
 export const submitTalk = functions.https.onRequest(talkSubmission.post);
 
-export const slackBot = functions.https.onRequest(slackbot.eventListener);
+export const slackListener = functions.https.onRequest(slackbot.eventListener);

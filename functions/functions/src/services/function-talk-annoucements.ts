@@ -185,7 +185,7 @@ export const send = async (request: functions.Request, response: functions.Respo
         if (upcomingTalk !== undefined && gif !== undefined) {
             const announcementMessage = createAttachmentMessage(upcomingTalk, gif.link);
             const slackWebhooktoken = functions.config().slack.webhooktoken.general;
-            const result = await slack.postAnnoucement(slackWebhooktoken, announcementMessage);
+            const result = await slack.postByWebhook(slackWebhooktoken, announcementMessage);
 
             if (result.text === 'ok') {
                 await gifstore.setGifUsed(gif.id);
