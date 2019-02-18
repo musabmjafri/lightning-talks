@@ -1,4 +1,4 @@
-export interface attachmentField {
+export interface AttachmentField {
 
     title: string;
     value: string;

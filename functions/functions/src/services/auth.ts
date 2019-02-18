@@ -1,7 +1,7 @@
 import * as functions from 'firebase-functions';
 import * as constants from '../constants';
 
-export const verifyApikey = async (request: functions.Request) => {
+export const verifyApikey = (request: functions.Request) => {
 
     const requestKey = request.header('apikey');
     const apikey: string = functions.config().auth.apikey;

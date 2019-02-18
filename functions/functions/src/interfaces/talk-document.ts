@@ -1,6 +1,6 @@
 import { Timestamp } from "@google-cloud/firestore";
 
-export interface talkDocument {
+export interface TalkDocument {
 
     talkTitle: string;
     speakerNameList: string[];

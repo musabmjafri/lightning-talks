@@ -5,7 +5,7 @@ import * as gifstore from './collection-gifstore';
 import * as datetime from './datetime';
 import * as auth from './auth';
 import { Talk } from '../classes/talk';
-import { attachmentField } from '../interfaces/slack-message';
+import { AttachmentField } from '../interfaces/slack-message';
 import { IncomingWebhookSendArguments, MessageAttachment, AttachmentAction } from '@slack/client';
 import * as constants from '../constants/';
 import * as annconstants from '../constants/announcements';
@@ -44,7 +44,7 @@ const createAttachmentMessage = (upcomingTalk: Talk, gifLink: string): IncomingW
         fields: []
     };
 
-    let mainAttachmentField: attachmentField = {
+    let mainAttachmentField: AttachmentField = {
 
         title: '',
         value: annconstants.header + dayOfWeek,
@@ -126,7 +126,7 @@ const createAttachmentMessage = (upcomingTalk: Talk, gifLink: string): IncomingW
         actions: []
     };
 
-    const actionAttachmentField: attachmentField = {
+    const actionAttachmentField: AttachmentField = {
 
         title: annconstants.footer,
         value: '',
@@ -177,7 +177,7 @@ const createAttachmentMessage = (upcomingTalk: Talk, gifLink: string): IncomingW
 export const send = async (request: functions.Request, response: functions.Response) => {
 
     try {
-        await auth.verifyApikey(request);
+        auth.verifyApikey(request);
 
         const upcomingTalk = await talks.getNextDayTalk();
         const gif = await gifstore.getBygoneGif();

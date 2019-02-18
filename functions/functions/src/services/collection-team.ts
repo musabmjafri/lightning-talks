@@ -6,7 +6,7 @@ import * as firconstants from '../constants/firestore';
 export const getAllTeamMembers = async (): Promise<TeamMember[] | undefined> => {
 
     try {
-        const collectionRef = await firestore.getCollectionReference(firconstants.collectionTeam);
+        const collectionRef = firestore.getCollectionReference(firconstants.collectionTeam);
         const snapshot = await collectionRef.where('isActive', firconstants.queryEquals, true).get();
 
         if (snapshot.empty) {

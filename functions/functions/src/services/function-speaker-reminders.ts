@@ -10,7 +10,7 @@ import * as auth from './auth';
 export const send = async (request: functions.Request, response: functions.Response) => {
 
     try {
-        await auth.verifyApikey(request);
+        auth.verifyApikey(request);
         response.send("ok"); //TODO: implementation
     }
     catch (err) {

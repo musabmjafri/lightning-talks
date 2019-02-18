@@ -1,5 +1,5 @@
 import { Timestamp } from "@google-cloud/firestore";
-import { talkDocument } from "../interfaces/talk-document";
+import { TalkDocument } from "../interfaces/talk-document";
 
 export class Talk {
 
@@ -53,7 +53,7 @@ export class Talk {
             document.get('likeCount'), document.get('likeList'), document.get('isSpecialTalk'), document.get('isActive'));
     }
 
-    static objectToDocument(object: Talk): talkDocument {
+    static objectToDocument(object: Talk): TalkDocument {
 
         return {
             talkTitle: object.talkTitle,
