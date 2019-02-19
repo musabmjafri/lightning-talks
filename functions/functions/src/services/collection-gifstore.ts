@@ -7,7 +7,7 @@ import { Timestamp } from '@google-cloud/firestore';
 export const getBygoneGif = async (): Promise<Gif | undefined> => {
 
     try {
-        const collectionRef = await firestore.getCollectionReference(firconstants.collectionTalksGifstore);
+        const collectionRef = firestore.getCollectionReference(firconstants.collectionTalksGifstore);
         const snapshot = await collectionRef.where('isActive', firconstants.queryEquals, true)
             .orderBy('lastUsed')
             .limit(1)
@@ -30,7 +30,7 @@ export const getBygoneGif = async (): Promise<Gif | undefined> => {
 export const setGifUsed = async (id: string): Promise<boolean> => {
 
     try {
-        const collectionRef = await firestore.getCollectionReference(firconstants.collectionTalksGifstore);
+        const collectionRef = firestore.getCollectionReference(firconstants.collectionTalksGifstore);
         const gifRef = await collectionRef.doc(id);
         const gif = await gifRef.get();
 

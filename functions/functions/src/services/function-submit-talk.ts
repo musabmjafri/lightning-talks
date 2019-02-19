@@ -9,7 +9,7 @@ import { Talk } from '../classes/talk';
 export const post = async (request: functions.Request, response: functions.Response) => {
 
     try {
-        await auth.verifyApikey(request);
+        auth.verifyApikey(request);
 
         const newTalk: Talk = request.body;
         newTalk.dateModified = new Date();
